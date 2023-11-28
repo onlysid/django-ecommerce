@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <title>Django E-Commerce</title>
+</head>
+<body>
+    <div class="container mx-auto flex flex-col items-center gap-8 py-8">
+
+        <div class="search w-full max-w-[900px]">
+            <form class="flex items-center justify-center gap-4">
+                <input type="text" name="item_name" placeholder="Search for Products" class="w-full p-4 rounded-xl shadow-xl border border-solid border-black/30">
+                <button class="px-4 py-2 bg-black shadow-xl rounded-full text-white hover:bg-gray-600 transition-all">Search</button>
+            </form>
+        </div>
+
+        <div class="flex p-4 flex-wrap gap-6 justify-center items-stretch">
+            {% for product in product_objects  %}
+                <div class="basis-[20rem] product p-4 rounded-xl bg-blue-200 shadow-xl flex flex-col items-center gap-4">
+                    <h1 class="font-black text-2xl">{{ product.title }}</h1>
+                    <div class="w-full h-[14rem] rounded-xl overflow-hidden">
+                        <img src="{{ product.image }}" class="w-full h-full object-cover">
+                    </div>
+                    <p class="max-h-[10rem] overflow-scroll">{{ product.description }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="pagination w-full max-w-[900px]">
+            <div class="flex items-center justify-center gap-4">
+                {% if product_objects.has_previous %}
+                    <a href="?page={{ product_objects.previous_page_number }}" class="px-4 py-2 bg-black shadow-xl rounded-full text-white hover:bg-gray-600 transition-all">Previous</a>
+                {% endif %}
+                <span class="px-4 py-2 shadow-xl rounded-full text-white bg-gray-600 transition-all">{{ product_objects.number }}</span>
+                {% if product_objects.has_next %}
+                    <a href="?page={{ product_objects.next_page_number }}" class="px-4 py-2 bg-black shadow-xl rounded-full text-white hover:bg-gray-600 transition-all">Next</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
