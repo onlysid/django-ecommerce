@@ -1,0 +1,7 @@
+#cartDropdown.active {
+    display: block!important;
+}
+
+#cartDropdown {
+    color: black;
+}
